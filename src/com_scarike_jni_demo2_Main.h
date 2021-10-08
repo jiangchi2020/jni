@@ -10,9 +10,9 @@ extern "C" {
 /*
  * Class:     com_scarike_jni_demo2_Main
  * Method:    eleType
- * Signature: (BSIJFDZC)V
+ * Signature: (BSIJFDZC)D
  */
-JNIEXPORT void JNICALL Java_com_scarike_jni_demo2_Main_eleType
+JNIEXPORT jdouble JNICALL Java_com_scarike_jni_demo2_Main_eleType
   (JNIEnv *, jobject, jbyte, jshort, jint, jlong, jfloat, jdouble, jboolean, jchar);
 
 #ifdef __cplusplus
