@@ -1,7 +1,22 @@
 # JNI学习笔记
 **前言**：JNI是在Java中调用本地方法的技术，说直白点就是用java调用C/C++程序，毕竟JVM是用C语言实现的这点功能肯定要有。
 
-给出一个链接：https://docs.oracle.com/en/java/javase/11/docs/specs/jni/index.html，这是Oracle关于JNI的官方文档
+最近想着学习一下JNI这门技术，这篇文档算是一个学习总结，用以记录以免以后忘记了，毕竟JNI不太常用  
+这篇文章也带有教程性质，我尽可能写的详细与基础，如果你也想学习JNI推荐先了解：  
+1. JVM内存模型，不需要太深入，了解堆、栈、方法区、常量池等对于理解本地方法调用大有益处
+2. C语言编译过程，预处理->编译->汇编->链接->运行，知道动态/静态链接库是什么
+3. DOS或Shell命令，gcc编译器，JDK的使用
+
+给出一个链接：https://docs.oracle.com/en/java/javase/11/docs/specs/jni/index.html ，这是Oracle关于JNI的官方文档
+
+本文中的案例说明：  
+    包名前缀为：com.scarike.jni.*
+    demo1：编程之源Hello World  
+    demo2：普通类型参数传递  
+    demo3：String类型参数传递  
+    demo4：数组类型参数传递  
+    因为全部使用javac命令手动编译，因此class文件和java源文件再同一目录下而不是target文件夹或out文件夹下
+
 ## JNI有啥用
 JNI技术现在已经用的不多了，Java已经有了一套庞大的生态体系，足够应付许多任务。JNI主要用于：
 
@@ -39,7 +54,7 @@ public class Main{
 ```
 在哪里调用，在哪里加载灵活多变，不要拘泥于此demo
 ## 如何编译动态库
-Java部分的语法其实就说完了，现在来看C语言部分
+Java部分的语法就说完了，现在是C语言部分
 
 JVM现在有一个class文件，需要的是一个动态链接库，那么JVM如何将库中的函数和Java方法对应上呢  
 简单粗暴：用函数名  
