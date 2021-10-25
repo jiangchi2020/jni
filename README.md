@@ -1,8 +1,9 @@
 # JNI学习笔记
-**前言**：JNI是在Java中调用本地方法的技术，说直白点就是用java调用C/C++程序，毕竟JVM是用C语言实现的这点功能肯定要有。
+**前言**：JNI是在Java中调用本地方法的技术，说直白点就是用java调用C/C++程序，毕竟JVM是用Cpp语言实现的这点功能肯定要有。
 
 最近想着学习一下JNI这门技术，这篇文档算是一个学习总结，用以记录以免以后忘记了，毕竟JNI不太常用  
 这篇文章也带有教程性质，我尽可能写的详细与基础，如果你也想学习JNI推荐先了解：  
+
 1. JVM内存模型，不需要太深入，了解堆、栈、方法区、常量池等对于理解本地方法调用大有益处
 2. C语言编译过程，预处理->编译->汇编->链接->运行，知道动态/静态链接库是什么
 3. DOS或Shell命令，gcc编译器，JDK的使用
@@ -10,7 +11,7 @@
 给出一个链接：https://docs.oracle.com/en/java/javase/11/docs/specs/jni/index.html ，这是Oracle关于JNI的官方文档
 
 本文中的案例说明：  
-    包名前缀为：com.scarike.jni.*
+    包名前缀为：com.scarike.jni.*  
     demo1：编程之源Hello World  
     demo2：普通类型参数传递  
     demo3：String类型参数传递  
@@ -332,7 +333,16 @@ JVM recv=> C语言中定义的String!
 ### 数组
 数组对应c语言中的jarray类型，还有更具体的jintArray,jdoubleArray等等，其定义如下：
 ```c
-struct _jobject;
+JNI技术现在已经用的不多了，Java已经有了一套庞大的生态体系，足够应付许多任务。JNI主要用于：
+
+当你已经用C语言写了一套API但不想用Java再写一遍的时候
+
+当你会了一套C语言下的类库但该类库没有Java版（或者你不想学）的时候
+
+JNI浅层原理
+JVM说叫虚拟机，其实就是一个普通的程序，他运行时还是得调用底层的动态链接库接着进一步调用操作系统接口。他能用Sun公司开发出来的库，也能用操作系统里面的库，自然也能调用你自己写的库。
+
+Java中有System.loadLibrary(String)方法，可以加载动态连接库，比如：struct _jobject;
 
 typedef struct _jobject *jobject;
 typedef jobject jstring;
@@ -477,3 +487,8 @@ Array=> [0, 1, 2, 3, 4, 5, 6, 7, 7, 8, 9]
 # 可以看到此时对数组的修改同步了过来，如果使用JNI_ABORT，最后一行就会输出：Array=> [4, 2, 5, 7, 8, 9, 0, 3, 1, 6, 7]
 ```
 还有其他的short数组，long数组以至Object数组等都有相应的转换函数，可参考帮助文档
+
+
+
+## 对象类型
+
